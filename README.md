@@ -1,1 +1,1 @@
-# covid_map
+# iCovid
