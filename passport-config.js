@@ -1,8 +1,13 @@
+const express = require('express')
+const app = express()
+app.use(express.static('views')) // includes bootstrap
+
 const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcrypt')
 
-function initialize(passport, getUserByUsername, getIserById) {
-    const authenticateUser = async (username, password, done) => {
+
+function initialize(passport, getUserByUsername, getUserById) {
+    const authenticateUser = async(username, password, done) => {
         const user = getUserByUsername(username)
         if (user == null) {
             return done(null, false, { message: 'Invalid Username' })
@@ -19,10 +24,10 @@ function initialize(passport, getUserByUsername, getIserById) {
         }
     }
 
-    passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser))
+    passport.use(new LocalStrategy({ usernameField: 'username' }, authenticateUser))
     passport.serializeUser((user, done) => done(null, user.id))
     passport.deserializeUser((id, done) => {
-      return done(null, getUserById(id))
+        return done(null, getUserById(id))
     })
 }
 

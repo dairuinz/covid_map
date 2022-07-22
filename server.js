@@ -19,12 +19,12 @@ initializePassport(
     id => users.find(user => user.id === id)
 )
 
-app.use(express.static('views')) // includes bootstrap
 const users = [] //instead of database for users
 
+app.use(express.static('views')) // includes bootstrap
 
-app.set('view-engine', 'ejs') //
-app.use(express.urlencoded({ extended: false })) //access mail etc inside request variable in post method
+app.set('view-engine', 'ejs')
+app.use(express.urlencoded({ extended: false }))
 app.use(flash())
 app.use(session({
     secret: process.env.SESSION_SECRET,
