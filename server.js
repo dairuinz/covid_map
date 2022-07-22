@@ -11,6 +11,7 @@ const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
+var bodyParser = require('body-parser');
 
 const initializePassport = require('./passport-config')
 initializePassport(
@@ -19,7 +20,28 @@ initializePassport(
     id => users.find(user => user.id === id)
 )
 
-const users = [] //instead of database for users
+const users = [ { id: '1658505443797',
+    username: 'o',
+    mail: 'o',
+    password:
+     '$2b$10$QmLQkcuv1PszaLhsvk7FrOz3RCUgBjdKDH.IIkXjlHAHXE6grAGJi' } ] //instead of database for users
+
+//SQL
+
+var mysql = require('mysql');
+var util = require('util');
+const url = require('url');
+var bodyParser = require('body-parser')
+var createError = require('http-errors')
+var con = require('./database')
+app.use(bodyParser.json())
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  }),
+)
+// var formidable = require('formidable');
+
 
 app.use(express.static('views')) // includes bootstrap
 
@@ -62,11 +84,34 @@ app.post('/register', checkNotAuthenticated, async(req, res) => {
             mail: req.body.mail,
             password: hashedPassword
         })
+        //   // const query = util.promisify(con.query).bind(con)
+        //   var mquery = "SELECT * FROM users WHERE username like \'"+req.body.username+"\' AND mail like \'"+req.body.mail+"\';"
+        //   // console.log(req.body.mail)
+        //   console.log(con.query)
+        // })
+        //
+        // con.query("SELECT * FROM users WHERE username like \'"+req.body.username+"\' AND mail like \'"+req.body.mail+"\';", function (
+        //   error,
+        //   response,
+        // ) {
+        //   console.log(error)
+        // })
+        console.log('ok')
+        var sql = "SELECT * FROM USERS;"
+        con.query(sql, function (err, result) {
+          if (err){
+            console.log(err)
+          }else{
+            console.log('ADDED')
+          }
+        })
+        console.log('okok')
+
         res.redirect('/login')
     } catch {
         res.redirect('/register')
     }
-    console.log(users)
+    console.log(req.body.mail)
 })
 
 app.delete('/logout', function(req, res, next) {
@@ -93,20 +138,8 @@ function checkNotAuthenticated(req, res, next) {
     next() //if user logged in cant enter login.ejs or register.ejs
 }
 
-//SQL
 
-// var con = require('./connection')
-// // var express = require('express')
-// // var app = express()
 
-// var bodyParser = require('body-parser')
 
-// app.user(bodyParser.json())
-// app.use(bodyParser.urlencoded({ extended:true }))
-// app.set('view engine', 'ejs')
-
-// app.get('/', function(req, res){
-//   res.sendFile(__dirname+'/register.ejs')
-// })
 
 app.listen(3000) //port 3000 @localhost
