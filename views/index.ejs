@@ -1,41 +1,79 @@
 <h1>Hi
-    <%= name %>
+  <%= name %>
 </h1>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iCovid</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iCovid</title>
+  <link rel="stylesheet" href="css/bootstrap.css">
 
-    <style>
-        [class*='col'] {
-            padding: 1rem;
-            background-color: #5869ca;
-            border: 2px solid #fff;
-            color: #fff;
-        }
-    </style>
+  <style>
+    [class*='col'] {
+      padding: 1rem;
+      background-color: #5869ca;
+      border: 2px solid #fff;
+      color: #fff;
+    }
+  </style>
 
-    <style>
-        [class*='container-sm border'] {
-            max-width: 540px;
-            margin-top: 10rem;
-            padding: 1rem;
-            border-radius: 1.5%;
-        }
-    </style>
+  <style>
+    [class*='container-sm border'] {
+      max-width: 540px;
+      margin-top: 10rem;
+      padding: 1rem;
+      border-radius: 1.5%;
+    }
+  </style>
 </head>
 
 <body>
   <div class="container-md">
-      <div class="text-center col">
-          <h2 class="display-5">iCovid</h2>
-      </div>
-    <form action="/logout?_method=DELETE" method="POST">
-        <button type="submit">Log Out</button>
+    <div class="text-center col">
+      <h2 class="display-5">iCovid</h2>
+    </div>
 
+    <div class="container text-center">
+      <div class="row">
+        <div class="col">
+          Column
+        </div>
+        <div class="col">
+          Column
+        </div>
+        <div class="col">
+          Column
+        </div>
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Dropdown link
+      </a>
+
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">Action</a></li>
+        <li><a class="dropdown-item" href="#">Another action</a></li>
+        <li><a class="dropdown-item" href="#">Something else here</a></li>
+      </ul>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Small button
+      </button>
+      <ul class="dropdown-menu">
+        ...
+      </ul>
+    </div>
+
+
+    <form action="/logout?_method=DELETE" method="POST">
+      <button type="submit">Log Out</button>
     </form>
   </div>
+
+  <script src="js/bootstrap.bundle.js "></script>
 </body>
