@@ -96,16 +96,16 @@ app.post('/register', checkNotAuthenticated, async(req, res) => {
         // ) {
         //   console.log(error)
         // })
-        console.log('ok')
-        var sql = "SELECT * FROM USERS;"
-        con.query(sql, function (err, result) {
-          if (err){
-            console.log(err)
-          }else{
-            console.log('ADDED')
-          }
-        })
-        console.log('okok')
+        // console.log('ok')
+        // var sql = "SELECT * FROM USERS;"
+        // con.query(sql, function (err, result) {
+        //   if (err){
+        //     console.log(err)
+        //   }else{
+        //     console.log('ADDED')
+        //   }
+        // })
+        // console.log('okok')
 
         res.redirect('/login')
     } catch {

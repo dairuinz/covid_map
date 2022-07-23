@@ -1,6 +1,41 @@
 <h1>Hi
     <%= name %>
 </h1>
-<form action="/logout?_method=DELETE" method="POST">
-    <button type="submit">Log Out</button>
-</form>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iCovid</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+
+    <style>
+        [class*='col'] {
+            padding: 1rem;
+            background-color: #5869ca;
+            border: 2px solid #fff;
+            color: #fff;
+        }
+    </style>
+
+    <style>
+        [class*='container-sm border'] {
+            max-width: 540px;
+            margin-top: 10rem;
+            padding: 1rem;
+            border-radius: 1.5%;
+        }
+    </style>
+</head>
+
+<body>
+  <div class="container-md">
+      <div class="text-center col">
+          <h2 class="display-5">iCovid</h2>
+      </div>
+    <form action="/logout?_method=DELETE" method="POST">
+        <button type="submit">Log Out</button>
+
+    </form>
+  </div>
+</body>

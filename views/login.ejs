@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 
-<% if(messages.error) { %>
-    <% messages.error %>
-        <% } %>
+
 
 <html lang="en">
 
@@ -49,13 +47,17 @@
                     <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                     <label for="password">Password</label>
                 </div>
-                <!-- <div class="form-floating mb-3">
-                    <input type="mail" class="form-control" id="mail" name="mail" placeholder="name@example.com">
-                    <label for="mail">Email Address</label>
-                </div> -->
+      
+                <div class="text-center alert alert-light" role="alert">
+                  <% if (messages.error) { %>
+                    <%= messages.error %>
+                  <% } %>
+                </div>
                 <div class="text-center d-grid gap-2 d-md-block">
                     <button class="btn btn-outline-primary" type="submit">Login</button>
                 </div>
+
+
                 <div class="text-center d-grid gap-2 d-md-block">
                     <a class="btn btn-link" href="register" type="button">Not a member yet? <br> Register here</a>
                 </div>

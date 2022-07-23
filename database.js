@@ -10,3 +10,5 @@ var con = mysql.createConnection({
 con.connect(function(err){  //checks database for user and adds
   console.log('SQL CONNECTED')
 })
+
+//npm run devStart  //start server
