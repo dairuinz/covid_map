@@ -7,6 +7,7 @@ var con = mysql.createConnection({
           database: "covidmap",
           multipleStatements: true
         });
+        
 con.connect(function(err){  //checks database for user and adds
   console.log('SQL CONNECTED')
 })
