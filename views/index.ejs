@@ -1,19 +1,23 @@
-<h1>Hi
+<!-- <h1>Hi
   <%= name %>
-</h1>
+</h1> -->
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>iCovid</title>
   <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+  <title>iCovid</title>
 
   <style>
     [class*='col'] {
       padding: 1rem;
       background-color: #5869ca;
-      border: 2px solid #fff;
+      border: 2px solid #d0d0d0;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
       color: #fff;
     }
   </style>
@@ -27,6 +31,15 @@
     }
   </style>
 
+  <style>
+    #map {
+      border: 2px solid #d0d0d0;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      width: 100%;
+      height: 70vh;
+    }
+  </style>
+
 </head>
 
 <body>
@@ -34,47 +47,40 @@
     <div class="text-center col">
       <h2 class="display-5">iCovid</h2>
 
-      <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-        <button type="button" class="btn btn-primary">1</button>
-        <button type="button" class="btn btn-primary">2</button>
-
-        <div class="btn-group" role="group">
-          <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Map</a></li>
-            <li><a class="dropdown-item" href="#">User Settings</a></li>
-
-            <li><hr class="dropdown-divider"></li>
-
-            <form action="/logout?_method=DELETE" class="dropdown-item" method="POST">
-              <button type="submit">Log Out</button>
-            </form>
-
-          </ul>
+      <div class="container overflow-hidden text-center">
+        <div class="row">
+          <div class="col-6 order-first">
+            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Search">
+          </div>
+          <div class="col">
+            <div class="d-grid gap-2">
+              <button class="btn btn-primary" type="button">Καταχώρηση</button>
+            </div>
+          </div>
+          <div class="col">
+            <div class="d-grid gap-2">
+              <button class="btn btn-primary" type="button">Δήλωση</button>
+            </div>
+          </div>
+          <div class="col order-last">
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Επιλογές Χρήστη
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-
-    <!-- <div class="container text-center">
-      <div class="row">
-        <div class="col">
-          Column
-        </div>
-        <div class="col">
-          Column
-        </div>
-        <div class="col">
-          Column
-        </div>
-      </div>
-    </div> -->
-
-
-
-
+    <div class="col">
+      <div id="map"></div>
+    </div>
 
     <form action="/logout?_method=DELETE" method="POST">
       <button type="submit">Log Out</button>
@@ -82,4 +88,51 @@
   </div>
 
   <script src="js/bootstrap.bundle.js "></script>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script>
+    // Map initialization
+    var map = L.map('map').setView([14.0860746, 100.608406], 6);
+
+    //osm layer
+    var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });
+    osm.addTo(map);
+
+    if (!navigator.geolocation) {
+      console.log("Your browser doesn't support geolocation feature!")
+    } else {
+      setInterval(() => {
+        navigator.geolocation.getCurrentPosition(getPosition)
+      }, 5000);
+    }
+
+    var marker, circle;
+
+    function getPosition(position) {
+      // console.log(position)
+      var lat = position.coords.latitude
+      var long = position.coords.longitude
+      var accuracy = position.coords.accuracy
+
+      if (marker) {
+        map.removeLayer(marker)
+      }
+
+      if (circle) {
+        map.removeLayer(circle)
+      }
+
+      marker = L.marker([lat, long])
+      circle = L.circle([lat, long], {
+        radius: accuracy
+      })
+
+      var featureGroup = L.featureGroup([marker, circle]).addTo(map)
+
+      map.fitBounds(featureGroup.getBounds())
+
+      console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
+    }
+  </script>
 </body>
