@@ -42,6 +42,12 @@ module.exports.login = function login(app, express) {
     }) //passes variables
   })
 
+  app.get('/', checkAuthenticated, (req, res) => {
+    res.render('index.ejs', {
+      name: req.user.username
+    }) //passes variables
+  })
+
   app.get('/login', checkNotAuthenticated, (req, res) => {
     res.render('login.ejs')
   })

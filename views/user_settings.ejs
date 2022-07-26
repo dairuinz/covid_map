@@ -2,6 +2,7 @@
   <%= name %>
 </h1> -->
 
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -42,9 +43,9 @@
 
   <style>
     img {
-        width: 150px;
-        margin-bottom: 15px;
-        position:
+      width: 150px;
+      margin-bottom: 15px;
+      position:
     }
   </style>
 
@@ -81,63 +82,37 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="col">
-      <div id="map"></div>
+      <div class="col">
+        <div class="container text-center">
+          <div class="row">
+            <div class="col order-second">
+              Change Password
+              <input type="password" class="form-control" id="inputPassword" placeholder="Current Password">
+              <input type="password" class="form-control" id="inputPassword" placeholder="New Password">
+              <input type="password" class="form-control" id="inputPassword" placeholder="Confirm Password">
+              <button type="submit" class="btn btn-primary mb-3">Confirm</button>
+            </div>
+            <div class="col order-first">
+              Change Username
+              <input type="password" class="form-control" id="inputPassword" placeholder="Current Username">
+              <input type="password" class="form-control" id="inputPassword" placeholder="New Username">
+              <input type="password" class="form-control" id="inputPassword" placeholder="Confirm Username">
+              <button type="submit" class="btn btn-primary mb-3">Confirm</button>
+            </div>
+            <div class="col order-last">
+              Visit History
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <form action="/logout?_method=DELETE" method="POST">
       <button type="submit">Log Out</button>
     </form>
-  </div>
 
-  <script src="js/bootstrap.bundle.js "></script>
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  <script>
-    // Map initialization
-    var map = L.map('map').setView([14.0860746, 100.608406], 6);
 
-    //osm layer
-    var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    });
-    osm.addTo(map);
+    <script src="js/bootstrap.bundle.js "></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
-    if (!navigator.geolocation) {
-      console.log("Your browser doesn't support geolocation feature!")
-    } else {
-      setInterval(() => {
-        navigator.geolocation.getCurrentPosition(getPosition)
-      }, 5000);
-    }
-
-    var marker, circle;
-
-    function getPosition(position) {
-      // console.log(position)
-      var lat = position.coords.latitude
-      var long = position.coords.longitude
-      var accuracy = position.coords.accuracy
-
-      if (marker) {
-        map.removeLayer(marker)
-      }
-
-      if (circle) {
-        map.removeLayer(circle)
-      }
-
-      marker = L.marker([lat, long])
-      circle = L.circle([lat, long], {
-        radius: accuracy
-      })
-
-      var featureGroup = L.featureGroup([marker, circle]).addTo(map)
-
-      map.fitBounds(featureGroup.getBounds())
-
-      console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
-    }
-  </script>
 </body>
