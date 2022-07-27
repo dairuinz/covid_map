@@ -3,10 +3,15 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 var login = require('./backend/login.js')
+var user_settings = require('./backend/user_settings.js')
+// var geoloc = require('./backend/geoloc.js')
 
 const express = require('express')
 const mysql = require('mysql')
 const app = express()
+const exphbs = require('express-handbars')
+const mongoose = require('mongoose')
+
 
 app.set('view-engine', 'ejs')
 app.use(express.urlencoded({
@@ -32,3 +37,5 @@ app.listen(3000) //port 3000 @localhost
 
 
 login.login(app, express)
+user_settings.user_settings(app, express)
+// geoloc.geoloc()
