@@ -1,4 +1,4 @@
-module.exports.user_settings = function user_settings(app, express) {
+module.exports.user_settings = function user_settings(app, express, connection) {
 
   app.use(express.static('views')) // includes bootstrap
 

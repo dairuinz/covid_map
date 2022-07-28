@@ -1,4 +1,4 @@
-module.exports.login = function login(app, express) {
+module.exports.login = function login(app, express, connection) {
 
   const bcrypt = require('bcrypt')
   const passport = require('passport')
@@ -7,9 +7,12 @@ module.exports.login = function login(app, express) {
   const methodOverride = require('method-override')
 
   const initializePassport = require('./passport-config')
+
   initializePassport(
     passport,
+    // username => users.find(user => user.username === username),
     username => users.find(user => user.username === username),
+    // username => connection.query(select username from users where username='e';)
     id => users.find(user => user.id === id)
   )
 
@@ -63,21 +66,43 @@ module.exports.login = function login(app, express) {
   })
 
   app.post('/register', checkNotAuthenticated, async (req, res) => {
-    try {
-      const hashedPassword = await bcrypt.hash(req.body.password, 10)
-      users.push({
-        id: Date.now().toString(), //id for each user
-        username: req.body.username, //passes the name variable from ejs
-        mail: req.body.mail,
-        password: hashedPassword
-      })
+    // try {
+    //   const hashedPassword = await bcrypt.hash(req.body.password, 10)
+    //   users.push({
+    //     id: Date.now().toString(), //id for each user
+    //     username: req.body.username, //passes the name variable from ejs
+    //     mail: req.body.mail,
+    //     password: hashedPassword
+    //   })
+    //
+    //   res.redirect('/login')
+    // } catch {
+    //   res.redirect('/register')
+    // }
+    // console.log(req.body.mail)
 
-      res.redirect('/login')
-    } catch {
-      res.redirect('/register')
-    }
-    console.log(req.body.mail)
+    const hashedPassword = await bcrypt.hash(req.body.password, 10)
+    connection.query('SELECT * FROM users WHERE username=?', [req.body.username], (err, result, fields) => {
+      console.log(Object.keys(result))
+      if (Object.keys(result).length !== 0) {
+        // res.send("exist")
+        console.log(req.body.username, 'exists')
+        // console.log(connection.query('SELECT * FROM users'))
+        res.redirect('/login')
+
+      } else {
+
+        connection.query('insert into users (id, username, e_mail, password, isAdmin) values (?, ?, ?, ?, 0)', [(Date.now().toString()), req.body.username, req.body.mail, hashedPassword])
+        // res.send("doesnt exist")
+        res.redirect('/login')
+
+
+      }
+    })
+
   })
+
+
 
   app.delete('/logout', function(req, res, next) {
     req.logout(function(err) {
