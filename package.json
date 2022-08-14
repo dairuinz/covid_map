@@ -1,0 +1,19 @@
+{
+  "name": "covid19-health-system-occupancy-main",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "spetz",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
+    "crypto-js": "^4.1.1",
+    "express": "^4.18.1",
+    "express-session": "^1.17.3"
+  }
+}
